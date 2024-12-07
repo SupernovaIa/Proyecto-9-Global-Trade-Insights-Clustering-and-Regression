@@ -12,6 +12,11 @@ import seaborn as sns
 # -----------------------------------------------------------------------
 import math
 
+# Advanced Statistical Methods
+# -----------------------------------------------------------------------
+from sklearn.ensemble import IsolationForest
+from sklearn.neighbors import LocalOutlierFactor
+
 
 def checker(df, col):
     """
@@ -279,47 +284,38 @@ def quick_plot_numeric(df, col, num=10, size=(10,5), rotation=45, color = 'mako'
         plot_numeric_distribution(df, min_, max_, col, n, size=size, rotation=rotation)
 
 
-def plot_groupby(df, groupby, col, max_entries, size=(12, 6), palette='mako', method='median'):
+def plot_groupby(df, groupby, cols, size=(12, 6), method='median'):
     """
-    Plots the median values of a numeric column grouped by a specified categorical column.
+    Plots bar charts of aggregated column values grouped by a specified column.
 
-    Parameters:
+    Parameters
+    ----------
     - df (pd.DataFrame): The DataFrame containing the data.
-    - groupby (str): The name of the categorical column to group by.
-    - col (str): The name of the numeric column for which medians are calculated.
-    - max_entries (int): The maximum number of group entries to display.
-    - size (tuple, optional): The size of the plot as (width, height). Defaults to (12, 6).
-    - palette (str, optional): The color palette for the bar plot. Defaults to 'mako'.
+    - groupby (str): The column name to group by.
+    - cols (list of str): List of column names to plot.
+    - size (tuple, optional): The size of the figure, specified as (width, height). Defaults to (12, 6).
+    - method (str, optional): The aggregation method to use ('median' or 'mean'). Defaults to 'median'.
 
-    Returns:
-    - None: Displays a bar plot of the median values per group.
+    Returns
+    -------
+    - None: The function displays the plots and does not return a value.
     """
+    fig, axes = plt.subplots(ncols=2, nrows=math.ceil(len(cols)/2), figsize=size)
+    axes = axes.flat
 
-    if method=='median':
+    for i, col in enumerate(cols):
 
-        grouped_df = (
-            df.groupby(groupby)[col]
-            .median()
-            .sort_values()
-            .reset_index()
-        )
+        if method == 'median':
+            df_group = df.groupby(groupby)[col].median().reset_index()
 
-    elif method=='mean':
-            grouped_df = (
-        df.groupby(groupby)[col]
-        .mean()
-        .sort_values()
-        .reset_index()
-    )
+        elif method == 'mean':
+            df_group = df.groupby(groupby)[col].mean().reset_index()
+             
+        sns.barplot(x=groupby, y=col, data=df_group, ax=axes[i], palette='coolwarm')
+        axes[i].set_title(col)
 
-    plt.figure(figsize=size)
-    sns.barplot(
-        data=grouped_df.iloc[:max_entries],
-        y=col,
-        x=groupby,
-        palette=palette,
-        edgecolor="black"
-    )
+    if len(cols) % 2 != 0:
+        fig.delaxes(axes[-1])
 
     plt.title(f'{col} median per {groupby}')
     plt.xlabel('')
@@ -373,3 +369,71 @@ def plot_relation_tv(df, tv, size=(40, 40), n_cols = 2):
         axes[i].set_title(f"{col} vs {tv}")   
 
     plt.tight_layout()
+
+
+def plot_temporal_evolution(df, col, date_col, size=(15, 6)):
+    """
+    Plots the temporal evolution of a specified column over time.
+
+    Parameters
+    ----------
+    - df (pd.DataFrame): The DataFrame containing the data.
+    - col (str): The name of the column to plot.
+    - date_col (str): The name of the column containing date or time information.
+    - size (tuple, optional): The size of the plot, specified as (width, height). Defaults to (15, 6).
+
+    Returns
+    -------
+    - None: The function displays the plot and does not return a value.
+    """
+    plt.figure(figsize=size)
+    sns.lineplot(data=df, x=date_col, y=col)
+
+    plt.title(f"Temporal evolution of {col}")
+    plt.xlabel("Date")
+    plt.ylabel(col)
+
+    plt.tight_layout()
+    plt.show()
+
+
+def find_outliers(dataframe, cols, method="lof", random_state=42, n_est=100, contamination=0.01, n_neigh=20): 
+    """
+    Identifies outliers in a given dataset using Isolation Forest or Local Outlier Factor methods.
+
+    Parameters:
+    - dataframe (pd.DataFrame): The input dataframe containing the data to analyze.
+    - cols (list): List of column names to be used for outlier detection.
+    - method (str, optional): The method to use for detecting outliers. Options are "ifo" (Isolation Forest) or "lof" (Local Outlier Factor). Defaults to "lof".
+    - random_state (int, optional): Random seed for reproducibility when using Isolation Forest. Defaults to 42.
+    - n_est (int, optional): Number of estimators for the Isolation Forest model. Defaults to 100.
+    - contamination (float, optional): The proportion of outliers in the dataset. Defaults to 0.01.
+    - n_neigh (int, optional): Number of neighbors for the Local Outlier Factor model. Defaults to 20.
+
+    Returns:
+    - (tuple): A tuple containing:
+    - pd.DataFrame: The original dataframe with an added column 'outlier' indicating the outlier status (-1 for outliers, 1 for inliers).
+    - object: The trained model used for outlier detection.
+
+    Recommendations:
+    - `n_estimators` (Isolation Forest): `100-300`. More trees improve accuracy, rarely needed >500.
+    - `contamination`: `0.01-0.1`. Adjust based on expected anomalies (higher if >10% anomalies).
+    - `n_neighbors` (LOF): `10-50`. Low for local anomalies, high for large/noisy datasets.
+    """
+
+    df = dataframe.copy()
+
+    if method == "ifo":  
+        model = IsolationForest(random_state=random_state, n_estimators=n_est, contamination=contamination, n_jobs=-1)
+        outliers = model.fit_predict(X=df[cols])
+
+    elif method == "lof":
+        model = LocalOutlierFactor(n_neighbors=n_neigh, contamination=contamination, n_jobs=-1)
+        outliers = model.fit_predict(X=df[cols])
+
+    else:
+        raise ValueError("Unrecognized method. Use 'ifo', or 'lof'.")
+    
+    df = pd.concat([df, pd.DataFrame(outliers, columns=['outlier'])], axis=1)
+
+    return df, model
