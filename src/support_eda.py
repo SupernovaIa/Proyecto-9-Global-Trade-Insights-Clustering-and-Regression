@@ -313,13 +313,14 @@ def plot_groupby(df, groupby, cols, size=(12, 6), method='median'):
              
         sns.barplot(x=groupby, y=col, data=df_group, ax=axes[i], palette='coolwarm')
         axes[i].set_title(col)
+        axes[i].set_xlabel('')
 
     if len(cols) % 2 != 0:
         fig.delaxes(axes[-1])
 
-    plt.title(f'{col} median per {groupby}')
     plt.xlabel('')
     plt.ylabel('')
+    fig.suptitle(groupby)
 
     plt.tight_layout()
     plt.show()
