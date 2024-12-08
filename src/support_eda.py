@@ -319,7 +319,6 @@ def plot_groupby(df, groupby, cols, size=(12, 6), method='median'):
         fig.delaxes(axes[-1])
 
     plt.xlabel('')
-    plt.ylabel('')
     fig.suptitle(groupby)
 
     plt.tight_layout()
