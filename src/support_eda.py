@@ -367,7 +367,11 @@ def plot_relation_tv(df, tv, size=(40, 40), n_cols = 2):
                             palette = "magma"
                             )
 
-        axes[i].set_title(f"{col} vs {tv}")   
+        axes[i].set_title(f"{col} vs {tv}")  
+
+    if len(df.columns) % n_cols != 0:
+        for j in range(len(df.columns), len(axes)):
+            fig.delaxes(axes[j])
 
     plt.tight_layout()
 
