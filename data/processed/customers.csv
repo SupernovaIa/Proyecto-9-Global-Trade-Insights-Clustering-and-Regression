@@ -1,4 +1,4 @@
-CustomerID,Segment,ProductID,Sales,Quantity,Profit,ShippingCost
+CustomerID,Segment,NumberOfProducts,TotalSales,TotalQuantity,TotalProfit,TotalShippingCost
 AA-315,Consumer,50,15990.669,165,983.2564999999998,1451.95
 AA-375,Consumer,55,6538.687,169,754.9194,1022.62
 AA-480,Consumer,48,19759.08278,175,2071.08818,1815.27
