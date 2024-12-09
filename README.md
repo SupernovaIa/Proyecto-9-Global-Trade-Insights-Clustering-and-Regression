@@ -113,7 +113,7 @@ To enhance insights, we applied clustering techniques across the three groupings
   - This aligns with the characteristics of Office Supplies—lower-cost items purchased in bulk compared to higher-value items in Technology and Furniture.
 
 #### Orders
-- **Preprocessing**: Frequency encoding for `ShipMode` and `OrderPriority`, with MinMax scaling.
+- **Preprocessing**: Frequency encoding for `ShipMode` and `OrderPriority`, with Robust scaling.
 - **Results**: k-means was the only method producing meaningful clusters, resulting in two groups:
   - **Cluster 1**: Orders with significantly higher sales but associated losses.
   - **Cluster 2**: Orders with moderate sales and positive profits.
