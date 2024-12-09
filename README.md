@@ -51,21 +51,94 @@ This project was developed in Python 3.12. To set it up, follow these steps:
 
 ## 📊 Results and Conclusions
 
-### Exploratory Analysis:
+### Exploratory Data Analysis
 
-WIP
+#### General Description
+The dataset consists of individual transactions that include information about orders, customers, and products. To facilitate analysis, the data needs to be grouped into specific tables for customers, products, and orders.
 
-### Clustering:
+#### Numerical Variables
+- **`Sales`**: Wide range (1 to 20,000, average 246.49). Outliers in high sales (>5,000).
+- **`Quantity`**: Ranges from 1 to 14 units, with an average of 3–4. Outliers for quantities >10.
+- **`Discount`**: Average 14% (maximum 85%). Outliers for discounts >50%.
+- **`Profit`**: Wide variability (-6,600 to 8,400). Outliers at both extremes.
+- **`ShippingCost`**: Mostly low costs. Outliers for values >200.
 
-WIP
+#### Categorical Variables
+- **`OrderID`**: 25,035 unique orders, some involving multiple transactions.
+- **`ShipMode`**: `Standard Class` is the most common (60%), while `Same Day` is the least frequent (5%).
+- **`Segment`**: Three categories: `Consumer` (52%), `Corporate`, and `Home Office`.
+- **`Market` and `Region`**: APAC and Canada show positive metrics.
+- **`Category` and `Sub-Category`**: Technology has the best performance, while Office Supplies generates lower profits.
 
-### Recommendations:
 
-WIP
+#### Groupings
+- **Customers**: 795 unique customers. Each customer is associated with a single segment and exhibits high geographic diversity. Relevant columns: 
+  - `Segment`
+  - Number of unique products (`ProductID`)
+  - Total `Sales`, `Quantity`, `Profit`, and `ShippingCost`.
+
+- **Products**: 10,292 unique products. Each product has a unique category and sub-category. Relevant columns:
+  - `Category`
+  - `Sub-Category`
+  - Number of unique customers (`CustomerID`)
+  - Total `Sales`, `Quantity`, `Profit`, and `ShippingCost`.
+
+- **Orders**: 25,035 unique orders. Most orders are linked to a single customer and shipping mode. Relevant columns:
+  - `ShipMode`
+  - `OrderPriority`
+  - Number of unique products (`ProductID`)
+  - Total `Sales`, `Quantity`, `Profit`, and `ShippingCost`.
+
+#### Correlations
+- **Sales and Shipping Cost**: Significant positive correlation.
+- **Sales and Quantity**: Moderate positive correlation.
+- **Profit and Sales**: Moderate positive correlation.
+- **Profit and Discount**: Moderate negative correlation, highlighting that higher discounts directly reduce profits.
+
+### Clustering Analysis
+
+To enhance insights, we applied clustering techniques across the three groupings (customers, products, and orders). Several algorithms were tested, including k-means, hierarchical clustering, spectral clustering, and DBSCAN. Data preprocessing varied depending on the grouping, and the best-performing configurations are summarized below.
+
+#### Customers
+- **Preprocessing**: Frequency encoding for the categorical variable `Segment` and MinMax scaling.
+- **Results**: All clustering methods yielded the same result—two primary clusters differentiated by `Segment`. No significant differences were observed in other variables, limiting actionable insights.
+
+#### Products
+- **Preprocessing**: Removed `Sub-Category` (subset of `Category`), applied frequency encoding to `Category`, and used MinMax scaling.
+- **Results**: Only k-means provided meaningful clusters, identifying two groups:
+  - **Cluster 1**: Products in `Technology` and `Furniture`.
+  - **Cluster 2**: Products in `Office Supplies`.
+- **Insights**: 
+  - Cluster 2 includes more products and customers but generates lower sales and profits.
+  - This aligns with the characteristics of Office Supplies—lower-cost items purchased in bulk compared to higher-value items in Technology and Furniture.
+
+#### Orders
+- **Preprocessing**: Frequency encoding for `ShipMode` and `OrderPriority`, with MinMax scaling.
+- **Results**: k-means was the only method producing meaningful clusters, resulting in two groups:
+  - **Cluster 1**: Orders with significantly higher sales but associated losses.
+  - **Cluster 2**: Orders with moderate sales and positive profits.
+- **Insights**: 
+  - The first cluster represents underperforming orders that merit closer analysis to improve business performance.
+
+### Recommendations
+
+#### 1. Optimize Discounts
+Discounts have a noticeable negative impact on profits, so it is essential to revise current practices. By focusing on offering discounts selectively, such as targeting strategic customers or high-margin products, the business can reduce the financial impact while maintaining competitiveness.
+
+
+#### 2. Focus on Profitable Products
+Technology and Furniture stand out as the primary drivers of sales and profit, while Office Supplies, despite their high volume, contribute less to overall profitability. Marketing efforts should prioritize Technology and Furniture, with Office Supplies positioned as an entry point to attract and retain customers.
+
+#### 3. Analyze Loss-Making Orders
+A significant number of orders show high sales volumes but result in financial losses, likely due to high costs or aggressive discounting. Identifying and addressing the root causes of these losses will help enhance overall profitability and inform future operational strategies.
 
 ## 🧬 Next Steps
 
-WIP
+#### 1. Root cause analysis
+Conduct deeper analyses to uncover the root causes and patterns behind the identified issues. This will provide actionable insights to address specific problem areas and enhance business performance.
+
+#### 2. Sales and profit forecasting
+Develop predictive models using time series analysis to forecast sales and profits. These models will help anticipate trends, optimize decision-making, and enable the business to adapt proactively to future market demands.
 
 ## 🤝 Contributions
 
