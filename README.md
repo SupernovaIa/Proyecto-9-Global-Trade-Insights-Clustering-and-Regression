@@ -1,12 +1,12 @@
-# Clustering Models Project
+# Clustering models project
 
-## 📜 Project Overview
+## 📜 Project overview
 
 This project aims to address one of the major challenges in a global trading company: better understanding its customer base, products, and operations. Through data analysis and the development of clustering models, we seek to identify patterns, trends, and key factors influencing the company’s success.
 
 We will work with a dataset that includes information on sales, shipping, costs, and profits at the customer and product levels. This will allow us to design specific strategies that maximize profits and optimize operational processes.
 
-## 🔧️ Project Structure
+## 🔧️ Project structure
 ```
 Global-Trade-Insights-Clustering-Project
 ├── data/                               # Folder containing datasets
@@ -17,7 +17,7 @@ Global-Trade-Insights-Clustering-Project
 ├── requirements.txt                    # Project dependencies
 ```
 
-## 🔧 Installation and Requirements
+## 🔧 Installation and requirements
 
 This project was developed in Python 3.12. To set it up, follow these steps:
 
@@ -36,7 +36,7 @@ This project was developed in Python 3.12. To set it up, follow these steps:
 4. Run the notebooks:
    Perform exploratory analysis and clustering by executing the notebooks in the `notebook/` folder.
 
-### Required Libraries:
+### Required libraries:
 
 - **Pandas:** Data manipulation and analysis ([Documentation](https://pandas.pydata.org/)) - `pandas==2.2.2`.
 - **NumPy:** Numerical data processing ([Documentation](https://numpy.org/)) - `numpy==1.26.4`.
@@ -49,21 +49,21 @@ This project was developed in Python 3.12. To set it up, follow these steps:
 - **Plotly:** Interactive visualizations ([Documentation](https://plotly.com/)) - `plotly==5.24.1`.
 - **Statsmodels:** Statistical modeling ([Documentation](https://www.statsmodels.org/)) - `statsmodels==0.14.4`.
 
-## 📊 Results and Conclusions
+## 📊 Results and conclusions
 
-### Exploratory Data Analysis
+### Exploratory data analysis
 
-#### General Description
+#### General description
 The dataset consists of individual transactions that include information about orders, customers, and products. To facilitate analysis, the data needs to be grouped into specific tables for customers, products, and orders.
 
-#### Numerical Variables
+#### Numerical variables
 - **`Sales`**: Wide range (1 to 20,000, average 246.49). Outliers in high sales (>5,000).
 - **`Quantity`**: Ranges from 1 to 14 units, with an average of 3–4. Outliers for quantities >10.
 - **`Discount`**: Average 14% (maximum 85%). Outliers for discounts >50%.
 - **`Profit`**: Wide variability (-6,600 to 8,400). Outliers at both extremes.
 - **`ShippingCost`**: Mostly low costs. Outliers for values >200.
 
-#### Categorical Variables
+#### Categorical variables
 - **`OrderID`**: 25,035 unique orders, some involving multiple transactions.
 - **`ShipMode`**: `Standard Class` is the most common (60%), while `Same Day` is the least frequent (5%).
 - **`Segment`**: Three categories: `Consumer` (52%), `Corporate`, and `Home Office`.
@@ -95,7 +95,7 @@ The dataset consists of individual transactions that include information about o
 - **Profit and Sales**: Moderate positive correlation.
 - **Profit and Discount**: Moderate negative correlation, highlighting that higher discounts directly reduce profits.
 
-### Clustering Analysis
+### Clustering analysis
 
 To enhance insights, we applied clustering techniques across the three groupings (customers, products, and orders). Several algorithms were tested, including k-means, hierarchical clustering, spectral clustering, and DBSCAN. Data preprocessing varied depending on the grouping, and the best-performing configurations are summarized below.
 
@@ -122,35 +122,20 @@ To enhance insights, we applied clustering techniques across the three groupings
 
 ### Recommendations
 
-#### 1. Optimize Discounts
+#### 1. Optimize discounts
 Discounts have a noticeable negative impact on profits, so it is essential to revise current practices. By focusing on offering discounts selectively, such as targeting strategic customers or high-margin products, the business can reduce the financial impact while maintaining competitiveness.
 
 
-#### 2. Focus on Profitable Products
+#### 2. Focus on profitable products
 Technology and Furniture stand out as the primary drivers of sales and profit, while Office Supplies, despite their high volume, contribute less to overall profitability. Marketing efforts should prioritize Technology and Furniture, with Office Supplies positioned as an entry point to attract and retain customers.
 
-#### 3. Analyze Loss-Making Orders
+#### 3. Analyze loss-making orders
 A significant number of orders show high sales volumes but result in financial losses, likely due to high costs or aggressive discounting. Identifying and addressing the root causes of these losses will help enhance overall profitability and inform future operational strategies.
 
-## 🧬 Next Steps
+## 🧬 Next steps
 
 #### 1. Root cause analysis
 Conduct deeper analyses to uncover the root causes and patterns behind the identified issues. This will provide actionable insights to address specific problem areas and enhance business performance.
 
 #### 2. Sales and profit forecasting
 Develop predictive models using time series analysis to forecast sales and profits. These models will help anticipate trends, optimize decision-making, and enable the business to adapt proactively to future market demands.
-
-## 🤝 Contributions
-
-Contributions are welcome. Follow these steps to collaborate:
-
-1. Fork the repository.
-2. Create a new branch for your changes.
-3. Submit a pull request when ready.
-
-If you have suggestions or improvements, feel free to open an issue.
-
-## ✍️ Author
-
-Javier Carreira - Lead Developer\
-GitHub: [SupernovaIa](https://github.com/SupernovaIa)
