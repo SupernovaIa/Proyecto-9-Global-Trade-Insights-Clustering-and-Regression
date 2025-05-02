@@ -23,11 +23,11 @@ This project was developed in Python 3.12. To set it up, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/SupernovaIa/Proyecto-9-Global-Trade-Insights-Clustering-and-Regression
+   git clone https://github.com/SupernovaIa/DataProject-Global-Trade-Insights-Clustering
    ```
 2. Navigate to the project directory:
    ```bash
-   cd Proyecto-9-Global-Trade-Insights-Clustering-and-Regression
+   cd DataProject-Global-Trade-Insights-Clustering
    ```
 3. Install the required dependencies:
    ```bash
