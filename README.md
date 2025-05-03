@@ -23,11 +23,11 @@ This project was developed in Python 3.12. To set it up, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/SupernovaIa/DataProject-Global-Trade-Insights-Clustering
+   git clone https://github.com/SupernovaIa/Global-trade-insights-Clustering
    ```
 2. Navigate to the project directory:
    ```bash
-   cd DataProject-Global-Trade-Insights-Clustering
+   cd Global-trade-insights-Clustering
    ```
 3. Install the required dependencies:
    ```bash
